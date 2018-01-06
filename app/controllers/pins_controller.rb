@@ -1,5 +1,6 @@
 class PinsController < ApplicationController
   before_action :find_pin, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[new, edit, update, destroy]
 
   def index
     @pins = Pin.all.order('created_at DESC')
@@ -10,12 +11,12 @@ class PinsController < ApplicationController
   end
 
   def create
-    @pin = Pin.new(pin_params)
+    @pin = current_user.pins.build(pin_params)
 
     if @pin.save
       redirect_to @pin, notice: 'Successfully created new Pin.'
     else
-      render :new
+      render 'new'
     end
   end
 
@@ -27,7 +28,7 @@ class PinsController < ApplicationController
     if @pin.update(pin_params)
       redirect_to @pin, notice: 'Pin successfully updated.'
     else
-      render :edit
+      render 'edit'
     end
   end
 
