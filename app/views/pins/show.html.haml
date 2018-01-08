@@ -1,12 +1,19 @@
-.col-md-6.col-md-offset-3
-    %h1= @pin.title
-    %p= image_tag @pin.image.url(:medium)
-    %p= @pin.description
-    %p
-        Submitted by 
-        = @pin.user.email
-        
-    %p= link_to 'Back', root_path
-    - if user_signed_in?
-        %p= link_to 'Edit', edit_pin_path
-        %p= link_to 'Delete', @pin, method: :delete, data: { confirm: 'Are you sure you want to delete this Pin?' }
+#pin_show.row
+    .col-md-8.col-md-offset-2
+        .panel.panel-default
+            .panel-heading.pin_image
+                = image_tag @pin.image.url
+            .panel-body
+                %h1= @pin.title
+                %p.description= @pin.description
+            .panel-footer
+                .row
+                    .col-md-6
+                        %p.user
+                            Submitted by
+                            = @pin.user.email
+                    .col-md-6
+                        - if user_signed_in?
+                            .btn-group.pull-right
+                                = link_to "Edit", edit_pin_path, class: 'btn btn-default'
+                                = link_to "Delete", pin_path, method: :delete, data: { confirm: 'Are you sure you want to delete this Pin?' }, class: 'btn btn-warning'
