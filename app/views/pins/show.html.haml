@@ -1,9 +1,12 @@
-%h1= @pin.title
-%p= @pin.description
-%p
-    Submitted by 
-    = @pin.user.email
-    
-%p= link_to 'Back', root_path
-%p= link_to 'Edit', edit_pin_path
-%p= link_to 'Delete', @pin, method: :delete, data: { confirm: 'Are you sure you want to delete this Pin?' }
+.col-md-6.col-md-offset-3
+    %h1= @pin.title
+    %p= image_tag @pin.image.url(:medium)
+    %p= @pin.description
+    %p
+        Submitted by 
+        = @pin.user.email
+        
+    %p= link_to 'Back', root_path
+    - if user_signed_in?
+        %p= link_to 'Edit', edit_pin_path
+        %p= link_to 'Delete', @pin, method: :delete, data: { confirm: 'Are you sure you want to delete this Pin?' }
