@@ -1,6 +1,6 @@
 class PinsController < ApplicationController
   before_action :find_pin, only: %i[show edit update destroy upvote]
-  before_action :authenticate_user!, only: %i[new, edit, update, destroy, upvote]
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @pins = Pin.all.order('created_at DESC')
